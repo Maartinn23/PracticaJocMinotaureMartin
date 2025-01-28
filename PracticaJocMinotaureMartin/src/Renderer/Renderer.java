@@ -19,33 +19,46 @@ public class Renderer {
     private final Terminal terminal;
 
     public Renderer() throws IOException {
-        this.terminal = TerminalBuilder.builder().system(true).build();
+        this.terminal = TerminalBuilder.builder().system(true)
+                .system(true)
+                .dumb(true)
+                .build();
 
     }
 
     public void renderJoc(KeyInput keyInput) throws IOException {
-        
-        boolean loop = keyInput.isGame();
 
-        if (keyInput.getEstatJoc().equals("menuPrincipal")) {
-            Terminal terminal = TerminalBuilder.builder().system(true).build();
+        try {
+            new ProcessBuilder("clear").inheritIO().start().waitFor();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
 
-            terminal.writer().println(ConsoleColors.YELLOW + "---- BENVINGUT AL JOC DEL MINOTAURE ----" + ConsoleColors.RESET);
-            terminal.writer().flush();
-
-            while (loop) {
+//            terminal.writer().println(ConsoleColors.YELLOW + "---- BENVINGUT AL JOC DEL MINOTAURE ----" + ConsoleColors.RESET);
+//            terminal.writer().flush();
+        switch (keyInput.getEstatJoc()) {
+            case "menu principal":
                 terminal.writer().println("---- MENU PRINCIPAL ----");
                 terminal.writer().println("-Inicia el joc");
                 terminal.writer().println("-Mostra les instruccions");
                 terminal.writer().println("-Pressiona q per sortir del joc");
+                               
                 terminal.writer().flush();
-
-            }
-
-            terminal.writer().println(ConsoleColors.PURPLE + "---- SORTINT DEL JOC ----" + ConsoleColors.RESET);
-            terminal.writer().flush();
+                
+                break;
+            case "game over":
+                terminal.writer().println(ConsoleColors.PURPLE + "---- SORTINT DEL JOC ----" + ConsoleColors.RESET);
+                terminal.writer().flush();
+                break;
+            case "menu instruccions":
+                terminal.writer().println("---- INSTRUCCIONS DEL JOC ----");
+                terminal.writer().println("1. Mou-te amb les fletxes.");
+                terminal.writer().println("2. Evita el minotaure.");
+                terminal.writer().println("3. Troba la sortida.");
+                terminal.writer().flush();
+                break;
 
         }
-    }
 
+    }
 }

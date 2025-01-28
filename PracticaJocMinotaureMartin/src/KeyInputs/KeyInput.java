@@ -30,26 +30,43 @@ public class KeyInput implements Runnable {
             Terminal terminal = TerminalBuilder.builder().system(true).build();
 
             Renderer renderer = new Renderer();
+
+            String estatAnterior = "";
+
+            if (!estatAnterior.equals(estatJoc)) {
+                renderer.renderJoc(this);
+                estatAnterior = estatJoc;
+
+            }
+
             renderer.renderJoc(this);
 
+            estatJoc = "menu principal";
+
             while (game) {
+                renderer.renderJoc(this);
 
                 input = terminal.reader().read();
                 c = (char) input;
+                
+               
+                switch (c) {
+                    case 'q':
+                    case 'Q':
+                        estatJoc = "game over";
+                        game = false;
+  
+                 
+//                        
+                      break;
+                    case 'i':
+                        estatJoc = "menu instruccions";
+                        break;
 
-                if (c == 'q' || c == 'Q') {
-                    game = false;
                 }
-                
-                switch(estatJoc){
-                    default:
-                        estatJoc = "menuPrincipal";
-                        
-                        
-                }
-                
-                
+
             }
+
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -69,6 +86,22 @@ public class KeyInput implements Runnable {
 
     public void setGame(boolean game) {
         this.game = game;
+    }
+
+    public int getInput() {
+        return input;
+    }
+
+    public void setInput(int input) {
+        this.input = input;
+    }
+
+    public char getC() {
+        return c;
+    }
+
+    public void setC(char c) {
+        this.c = c;
     }
 
 }

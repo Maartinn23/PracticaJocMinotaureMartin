@@ -8,6 +8,12 @@ import Utilities.ConsoleColors;
 
 public class KeyInput implements Runnable {
 
+    private String estatJoc;
+    private boolean game;
+    private int input;
+    private char c;
+    private int seleccionador;
+
     public KeyInput(String estatJoc, boolean game) {
         this.estatJoc = estatJoc;
         this.game = game;
@@ -18,54 +24,63 @@ public class KeyInput implements Runnable {
         this.game = true;
     }
 
-    private String estatJoc;
-    private boolean game;
-    private int input;
-    private char c;
-
     @Override
     public void run() {
         try {
-
-            Terminal terminal = TerminalBuilder.builder().system(true).build();
+            Terminal terminal = TerminalBuilder.builder()
+                    .system(true)
+                    .dumb(true) 
+                    .build();
+            terminal.enterRawMode();
 
             Renderer renderer = new Renderer();
-
-            String estatAnterior = "";
-
-            if (!estatAnterior.equals(estatJoc)) {
-                renderer.renderJoc(this);
-                estatAnterior = estatJoc;
-
-            }
-
-            renderer.renderJoc(this);
-
+            seleccionador = 1;
             estatJoc = "menu principal";
 
-            while (game) {
-                renderer.renderJoc(this);
+            renderer.renderMenu(this);
 
+            while (game) {
                 input = terminal.reader().read();
                 c = (char) input;
-                
-               
+
                 switch (c) {
                     case 'q':
                     case 'Q':
                         estatJoc = "game over";
                         game = false;
-  
-                 
-//                        
-                      break;
-                    case 'i':
-                        estatJoc = "menu instruccions";
                         break;
-
+                    case 'w':
+                    case 'W':
+                        if (seleccionador < 3) {
+                            seleccionador += 1;
+                        } else {
+                            seleccionador = 1;
+                        }
+                        renderer.renderMenu(this);
+                        break;
+                    case 's':
+                    case 'S':
+                        if (seleccionador > 1) {
+                            seleccionador -= 1;
+                        } else {
+                            seleccionador = 3;
+                        }
+                        renderer.renderMenu(this);
+                        break;
+                    case ' ':
+                        if (seleccionador == 1) {
+                            estatJoc = "iniciar partida";
+                        } else if (seleccionador == 2) {
+                            estatJoc = "menu instruccions";
+                        }
+                        renderer.renderMenu(this);
+                        break;
                 }
-
             }
+
+            // Mensaje al salir
+            terminal.writer().println(ConsoleColors.PURPLE + "---- SORTINT DEL JOC ----" + ConsoleColors.RESET);
+            terminal.writer().flush();
 
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -76,32 +91,11 @@ public class KeyInput implements Runnable {
         return estatJoc;
     }
 
-    public void setEstatJoc(String estatJoc) {
-        this.estatJoc = estatJoc;
-    }
-
     public boolean isGame() {
         return game;
     }
 
-    public void setGame(boolean game) {
-        this.game = game;
+    public int getSeleccionador() {
+        return seleccionador;
     }
-
-    public int getInput() {
-        return input;
-    }
-
-    public void setInput(int input) {
-        this.input = input;
-    }
-
-    public char getC() {
-        return c;
-    }
-
-    public void setC(char c) {
-        this.c = c;
-    }
-
 }

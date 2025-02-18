@@ -5,6 +5,8 @@ import java.io.IOException;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 import Utilities.ConsoleColors;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class KeyInput implements Runnable {
 
@@ -29,13 +31,12 @@ public class KeyInput implements Runnable {
         try {
             Terminal terminal = TerminalBuilder.builder()
                     .system(true)
-                    .dumb(true) 
+                    .dumb(true)
                     .build();
             terminal.enterRawMode();
 
             Renderer renderer = new Renderer();
             seleccionador = 1;
-            estatJoc = "menu principal";
 
             renderer.renderMenu(this);
 
@@ -46,9 +47,10 @@ public class KeyInput implements Runnable {
                 switch (c) {
                     case 'q':
                     case 'Q':
-                        estatJoc = "game over";
+                        estatJoc = "gameOver";
                         game = false;
                         break;
+
                     case 'w':
                     case 'W':
                         if (seleccionador < 3) {
@@ -58,6 +60,7 @@ public class KeyInput implements Runnable {
                         }
                         renderer.renderMenu(this);
                         break;
+
                     case 's':
                     case 'S':
                         if (seleccionador > 1) {
@@ -67,23 +70,39 @@ public class KeyInput implements Runnable {
                         }
                         renderer.renderMenu(this);
                         break;
+
                     case ' ':
-                        if (seleccionador == 1) {
-                            estatJoc = "iniciar partida";
-                        } else if (seleccionador == 2) {
-                            estatJoc = "menu instruccions";
+                        if (estatJoc.equals("menuPrincipal")) {
+                            if (seleccionador == 1) {
+                                estatJoc = "partidaIniciada";
+                                renderer.renderMapa(this);
+                            } else if (seleccionador == 2) {
+                                estatJoc = "menuInstruccions";
+                                renderer.renderMenuInstruccions(this);
+
+                            } else if (seleccionador == 3) {
+                                estatJoc = "salir";
+                                game = false;
+                            }
+                        } else if (estatJoc.equals("menuInstruccions")) {
+                            estatJoc = "menuPrincipal";
+                            renderer.renderMenu(this);
+                        } else if (estatJoc.equals("partidaIniciada")) {
+                            estatJoc = "menuPrincipal";
+                            renderer.renderMenu(this);
                         }
-                        renderer.renderMenu(this);
+
                         break;
                 }
             }
 
-            // Mensaje al salir
             terminal.writer().println(ConsoleColors.PURPLE + "---- SORTINT DEL JOC ----" + ConsoleColors.RESET);
             terminal.writer().flush();
 
         } catch (IOException ex) {
             ex.printStackTrace();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(KeyInput.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -97,5 +116,21 @@ public class KeyInput implements Runnable {
 
     public int getSeleccionador() {
         return seleccionador;
+    }
+
+    public int getInput() {
+        return input;
+    }
+
+    public void setInput(int input) {
+        this.input = input;
+    }
+
+    public char getC() {
+        return c;
+    }
+
+    public void setC(char c) {
+        this.c = c;
     }
 }

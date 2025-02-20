@@ -18,7 +18,7 @@ public class Map {
     
    
     private char[][] mapa = {
-        {'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'},
+        {'J', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'},
         {'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'},
         {'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'},
         {'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'},
@@ -40,9 +40,10 @@ public class Map {
         {'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'}};
         
 
-    public char[][] getMapa() {
-        return mapa;
+    /*public char[][] getMapa(int x, int y) {
+        if(x >= 0)
     }
+*/
 
     public void setMapa(char[][] mapa) {
         this.mapa = mapa;

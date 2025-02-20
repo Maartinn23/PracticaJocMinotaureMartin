@@ -14,17 +14,17 @@ public class Entity {
 
     }
 
-    public Entity(int x, int y, String character, String colorEntitat) {
+    public Entity(int x, int y, char caracter, String colorEntitat) {
         this.x = x;
         this.y = y;
-        this.character = character;
+        this.caracter = caracter;
         this.colorEntitat = colorEntitat;
     }
 
     // Atributs classe pare
     protected int x;
     protected int y;
-    protected String character;
+    protected char caracter;
     protected String colorEntitat;
 
     // Getters y setters
@@ -36,8 +36,8 @@ public class Entity {
         return y;
     }
 
-    public String getCharacter() {
-        return character;
+    public char getCharacter() {
+        return caracter;
     }
 
     public String getColorEntitat() {
@@ -52,8 +52,8 @@ public class Entity {
         this.y = y;
     }
 
-    public void setCharacter(String character) {
-        this.character = character;
+    public void setCharacter(char caracter) {
+        this.caracter = caracter;
     }
 
     public void setColorEntitat(String colorEntitat) {

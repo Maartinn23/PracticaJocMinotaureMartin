@@ -53,22 +53,26 @@ public class KeyInput implements Runnable {
 
                     case 'w':
                     case 'W':
-                        if (seleccionador < 3) {
-                            seleccionador += 1;
-                        } else {
-                            seleccionador = 1;
+                        if (estatJoc.equals("menuPrincipal")) {
+                            if (seleccionador < 3) {
+                                seleccionador += 1;
+                            } else {
+                                seleccionador = 1;
+                            }
+                            renderer.renderMenu(this);
                         }
-                        renderer.renderMenu(this);
                         break;
 
                     case 's':
                     case 'S':
-                        if (seleccionador > 1) {
-                            seleccionador -= 1;
-                        } else {
-                            seleccionador = 3;
+                        if (estatJoc.equals("menuPrincipal")) {
+                            if (seleccionador > 1) {
+                                seleccionador -= 1;
+                            } else {
+                                seleccionador = 3;
+                            }
+                            renderer.renderMenu(this);
                         }
-                        renderer.renderMenu(this);
                         break;
 
                     case ' ':

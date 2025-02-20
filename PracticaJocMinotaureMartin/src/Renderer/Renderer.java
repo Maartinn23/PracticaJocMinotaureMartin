@@ -77,7 +77,7 @@ public class Renderer {
         }
         
         Map mapa = new Map();
-        mapa.mostrarMapa(mapa.getMapa());
+//        mapa.mostrarMapa(mapa.getMapa());
 
         
     }

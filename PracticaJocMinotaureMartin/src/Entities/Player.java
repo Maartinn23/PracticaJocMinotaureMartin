@@ -4,6 +4,8 @@
  */
 package Entities;
 
+import KeyInputs.KeyInput;
+import Levels.Map;
 import Utilities.ConsoleColors;
 
 /**
@@ -12,13 +14,22 @@ import Utilities.ConsoleColors;
  */
 public class Player extends Entity {
     
-    protected String character = "Jugador";
+    
+    protected  char caracter = 'J';
     protected String colorEntitat = ConsoleColors.GREEN; 
+    protected int x = 0;
+    protected int y = 0;
     
     
-    
-    
-    public void move(){
+    public void move(KeyInput keyInput, Map mapa){
+        
+        char entradaUsuari = keyInput.getC();
+        
+        if(entradaUsuari == 'w' || entradaUsuari == 'W'){
+            
+        }
+        
+        
         
     }
     

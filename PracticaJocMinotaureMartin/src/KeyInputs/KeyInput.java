@@ -61,8 +61,7 @@ public class KeyInput implements Runnable {
                                 seleccionador = 1;
                             }
                             renderer.renderMenu(this);
-                        }
-                        else if (estatJoc.equals("partidaIniciada")){
+                        } else if (estatJoc.equals("partidaIniciada")) {
                             renderer.renderMovimentJugador(this);
                         }
                         break;
@@ -76,6 +75,20 @@ public class KeyInput implements Runnable {
                                 seleccionador = 3;
                             }
                             renderer.renderMenu(this);
+                        } else if (estatJoc.equals("partidaIniciada")) {
+                            renderer.renderMovimentJugador(this);
+                        }
+                        break;
+                    case 'a':
+                    case 'A':
+                        if (estatJoc.equals("partidaIniciada")) {
+                            renderer.renderMovimentJugador(this);
+                        }
+                        break;
+                    case 'd':
+                    case 'D':
+                        if (estatJoc.equals("partidaIniciada")) {
+                            renderer.renderMovimentJugador(this);
                         }
                         break;
 
@@ -142,5 +155,4 @@ public class KeyInput implements Runnable {
         this.c = c;
     }
 
-   
 }

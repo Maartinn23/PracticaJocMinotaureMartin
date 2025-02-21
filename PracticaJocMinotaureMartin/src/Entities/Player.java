@@ -27,21 +27,39 @@ public class Player extends Entity {
     public void move(KeyInput keyInput, Map mapa, char caracter, char entradaUsuari) throws IOException, InterruptedException{
         
         int[] coordenadesActuals = mapa.getCoordenadas(caracter);
-                   System.out.println(coordenadesActuals[0] + " " + coordenadesActuals[1]);
-
+        int novaX = coordenadesActuals[0];
+        int novaY = coordenadesActuals[1];
                
-        if(entradaUsuari == 'w' || entradaUsuari == 'W'){
+            switch(entradaUsuari){
+                
+                case 'w':
+                case 'W':
+                    novaX -= 1;
+                    mapa.setCoordenadas(novaX, novaY, caracter);
+                    break;
+                
+                case 's':
+                case 'S':
+                    novaX += 1;
+                    mapa.setCoordenadas(novaX, novaY, caracter);
+                    break;
+                case 'a':
+                case 'A':
+                    novaY -= 1;
+                    mapa.setCoordenadas(novaX, novaY, caracter);
+                    break;
+                case 'd':
+                case 'D':
+                    novaY += 1;
+                    mapa.setCoordenadas(novaX, novaY, caracter);
+                    break;
+                    
+
             
-            int novaX = coordenadesActuals[0] - 1;
-            int novaY = coordenadesActuals[1];
-            
-            
-            mapa.setCoordenadas(novaX, novaY, caracter);
- 
-            
-            
-            
+                    
         }
+        
+
         
         
         

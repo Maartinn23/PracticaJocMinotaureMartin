@@ -95,6 +95,7 @@ public class Renderer {
             e.printStackTrace();
         }
         
+        System.out.println("Tecla presionada: " + keyInput.getC());
         Player jugador = new Player();
 
         

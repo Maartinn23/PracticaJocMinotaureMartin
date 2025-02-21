@@ -1,5 +1,6 @@
 package Renderer;
 
+import Entities.Player;
 import KeyInputs.KeyInput;
 import Levels.Map;
 import Utilities.ConsoleColors;
@@ -8,9 +9,11 @@ import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 
 public class Renderer {
-
-    public Renderer() {
-
+    
+    
+    private Map mapa = new Map();
+    
+    public Renderer(){
     }
 
     public void renderMenu(KeyInput keyInput) throws IOException {
@@ -67,7 +70,7 @@ public class Renderer {
        
     }
     
-    public void renderMapa(KeyInput keyInput) throws IOException, InterruptedException{
+    public char[][] renderMapa(KeyInput keyInput) throws IOException, InterruptedException{
         
         Terminal terminal = TerminalBuilder.builder().system(true).build();
         try {
@@ -76,10 +79,32 @@ public class Renderer {
             e.printStackTrace();
         }
         
-        Map mapa = new Map();
-//        mapa.mostrarMapa(mapa.getMapa());
-
+        mapa.mostrarMapa(mapa.getMapa());
+        
+        return mapa.getMapa();
+       
         
     }
+    
+    public void renderMovimentJugador(KeyInput keyInput) throws IOException, InterruptedException{
+        
+        Terminal terminal = TerminalBuilder.builder().system(true).build();
+        try {
+            new ProcessBuilder("clear").inheritIO().start().waitFor();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        
+        Player jugador = new Player();
+
+        
+        
+        jugador.move(keyInput, mapa, 'J', keyInput.getC());
+        
+        renderMapa(keyInput);
+        
+        
+    }
+    
     
 }

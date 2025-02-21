@@ -8,6 +8,7 @@ import Utilities.ConsoleColors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+// TODO: arreglar logica de enviar input renderer.renderMapa para que funcione el metodo move().
 public class KeyInput implements Runnable {
 
     private String estatJoc;
@@ -60,6 +61,9 @@ public class KeyInput implements Runnable {
                                 seleccionador = 1;
                             }
                             renderer.renderMenu(this);
+                        }
+                        else if (estatJoc.equals("partidaIniciada")){
+                            renderer.renderMovimentJugador(this);
                         }
                         break;
 
@@ -137,4 +141,6 @@ public class KeyInput implements Runnable {
     public void setC(char c) {
         this.c = c;
     }
+
+   
 }

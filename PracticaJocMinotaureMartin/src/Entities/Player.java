@@ -6,26 +6,40 @@ package Entities;
 
 import KeyInputs.KeyInput;
 import Levels.Map;
+import Renderer.Renderer;
 import Utilities.ConsoleColors;
+import java.io.IOException;
 
 /**
  *
  * @author alumnegs
+ * // TODO: Acabar movimiento de J, si llega a pared, impedir movimiento.
  */
 public class Player extends Entity {
     
     
     protected  char caracter = 'J';
     protected String colorEntitat = ConsoleColors.GREEN; 
-    protected int x = 0;
-    protected int y = 0;
+    protected int x;
+    protected int y;
     
     
-    public void move(KeyInput keyInput, Map mapa){
+    public void move(KeyInput keyInput, Map mapa, char caracter, char entradaUsuari) throws IOException, InterruptedException{
         
-        char entradaUsuari = keyInput.getC();
-        
+        int[] coordenadesActuals = mapa.getCoordenadas(caracter);
+                   System.out.println(coordenadesActuals[0] + " " + coordenadesActuals[1]);
+
+               
         if(entradaUsuari == 'w' || entradaUsuari == 'W'){
+            
+            int novaX = coordenadesActuals[0] - 1;
+            int novaY = coordenadesActuals[1];
+            
+            
+            mapa.setCoordenadas(novaX, novaY, caracter);
+ 
+            
+            
             
         }
         

@@ -117,7 +117,7 @@ public class KeyInput implements Runnable {
                 }
             }
 
-            terminal.writer().println(ConsoleColors.PURPLE + "---- SORTINT DEL JOC ----" + ConsoleColors.RESET);
+            terminal.writer().println(ConsoleColors.RED + "---- SORTINT DEL JOC ----" + ConsoleColors.RESET);
             terminal.writer().flush();
 
         } catch (IOException ex) {

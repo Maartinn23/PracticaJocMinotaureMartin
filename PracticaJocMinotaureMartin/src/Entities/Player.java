@@ -12,63 +12,90 @@ import java.io.IOException;
 
 /**
  *
- * @author alumnegs
- * // TODO: Acabar movimiento de J, si llega a pared, impedir movimiento.
+ * @author alumnegs // TODO: Acabar movimiento de J, si llega a pared, impedir
+ * movimiento.
  */
 public class Player extends Entity {
-    
-    
-    protected  char caracter = 'J';
-    protected String colorEntitat = ConsoleColors.GREEN; 
+
+    protected char caracter = 'J';
+    protected String colorEntitat = "\033[0;32m";
     protected int x;
     protected int y;
-    
-    
-    public void move(KeyInput keyInput, Map mapa, char caracter, char entradaUsuari) throws IOException, InterruptedException{
-        
-        int[] coordenadesActuals = mapa.getCoordenadas(caracter);
+
+    public void move(KeyInput keyInput, Map mapa, char caracter, char entradaUsuari)
+            throws IOException, InterruptedException {
+
+        int[] coordenadesActuals = mapa.getCoordenades(caracter);
         int novaX = coordenadesActuals[0];
         int novaY = coordenadesActuals[1];
-               
-            switch(entradaUsuari){
-                
-                case 'w':
-                case 'W':
+
+        switch (entradaUsuari) {
+
+            case 'w':
+            case 'W':
+                if (!mapa.delimitadorMapa(mapa.getMapa(), (novaX - 1), novaY)) {
                     novaX -= 1;
                     mapa.setCoordenadas(novaX, novaY, caracter);
-                    break;
-                
-                case 's':
-                case 'S':
+                }
+                break;
+
+            case 's':
+            case 'S':
+                if (!mapa.delimitadorMapa(mapa.getMapa(), (novaX + 1), novaY)) {
                     novaX += 1;
                     mapa.setCoordenadas(novaX, novaY, caracter);
-                    break;
-                case 'a':
-                case 'A':
+                }
+                break;
+            case 'a':
+            case 'A':
+                if (!mapa.delimitadorMapa(mapa.getMapa(), novaX, (novaY - 1))) {
                     novaY -= 1;
                     mapa.setCoordenadas(novaX, novaY, caracter);
-                    break;
-                case 'd':
-                case 'D':
+                }
+
+                break;
+            case 'd':
+            case 'D':
+                if (!mapa.delimitadorMapa(mapa.getMapa(), novaX, (novaY + 1))) {
                     novaY += 1;
                     mapa.setCoordenadas(novaX, novaY, caracter);
-                    break;
-                    
+                }
+                break;
 
-            
-                    
         }
-        
 
-        
-        
-        
     }
-    
-    
-    
-    
-    
-    
-    
+
+    public char getCaracter() {
+        return caracter;
+    }
+
+    public void setCaracter(char caracter) {
+        this.caracter = caracter;
+    }
+
+    public String getColorEntitat() {
+        return colorEntitat;
+    }
+
+    public void setColorEntitat(String colorEntitat) {
+        this.colorEntitat = colorEntitat;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
 }

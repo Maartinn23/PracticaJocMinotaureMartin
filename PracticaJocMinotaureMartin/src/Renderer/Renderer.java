@@ -12,6 +12,7 @@ public class Renderer {
     
     
     private Map mapa = new Map();
+    private Player jugador = new Player();
     
     public Renderer(){
     }
@@ -79,7 +80,7 @@ public class Renderer {
             e.printStackTrace();
         }
         
-        mapa.mostrarMapa(mapa.getMapa());
+        mapa.mostrarMapa(mapa.getMapa(),jugador);
         
         return mapa.getMapa();
        
@@ -95,7 +96,6 @@ public class Renderer {
             e.printStackTrace();
         }
         
-        System.out.println("Tecla presionada: " + keyInput.getC());
         Player jugador = new Player();
 
         

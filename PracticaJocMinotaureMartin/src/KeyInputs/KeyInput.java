@@ -1,5 +1,6 @@
 package KeyInputs;
 
+import Levels.Map;
 import Renderer.Renderer;
 import java.io.IOException;
 import org.jline.terminal.Terminal;
@@ -10,21 +11,19 @@ import java.util.logging.Logger;
 
 // TODO: arreglar logica de enviar input renderer.renderMapa para que funcione el metodo move().
 public class KeyInput implements Runnable {
-
+    
+    private Map mapa;
+    
     private String estatJoc;
     private boolean game;
     private int input;
     private char c;
     private int seleccionador;
+    
 
-    public KeyInput(String estatJoc, boolean game) {
-        this.estatJoc = estatJoc;
-        this.game = game;
-    }
-
-    public KeyInput() {
-        this.estatJoc = "menuPrincipal";
-        this.game = true;
+    public KeyInput(Map mapa) {
+        this.mapa = mapa;
+        
     }
 
     @Override
@@ -36,10 +35,10 @@ public class KeyInput implements Runnable {
                     .build();
             terminal.enterRawMode();
 
-            Renderer renderer = new Renderer();
+            Renderer renderer = new Renderer(mapa, this);
             seleccionador = 1;
 
-            renderer.renderMenu(this);
+           // renderer.renderMenu(this);
 
             while (game) {
                 input = terminal.reader().read();

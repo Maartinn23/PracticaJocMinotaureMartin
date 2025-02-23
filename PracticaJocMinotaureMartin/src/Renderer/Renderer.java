@@ -1,5 +1,6 @@
 package Renderer;
 
+import Entities.Minotaur;
 import Entities.Player;
 import KeyInputs.KeyInput;
 import Levels.Map;
@@ -11,10 +12,16 @@ import org.jline.terminal.TerminalBuilder;
 public class Renderer {
     
     
-    private Map mapa = new Map();
+    private Map mapa;
     private Player jugador = new Player();
+    private KeyInput keyInput;
+    private Minotaur minotaure = new Minotaur(mapa,keyInput,this);
     
-    public Renderer(){
+    public Renderer(Map mapa, KeyInput keyInput){
+        
+       this.mapa = mapa;
+       this.keyInput = keyInput;
+        
     }
 
     public void renderMenu(KeyInput keyInput) throws IOException {
@@ -95,17 +102,33 @@ public class Renderer {
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
-        
-        Player jugador = new Player();
 
+        jugador.move(keyInput, mapa, jugador.getCaracter(), keyInput.getC());
         
+        renderMapa(keyInput);
+                
+    }
+
+    public void renderMovimentMinotaure(KeyInput keyInput) throws IOException,InterruptedException{
         
-        jugador.move(keyInput, mapa, 'J', keyInput.getC());
+        Terminal terminal = TerminalBuilder.builder().system(true).build();
+        try {
+            new ProcessBuilder("clear").inheritIO().start().waitFor();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        
+        minotaure.moveMinotaur(mapa, minotaure.getCaracter());
         
         renderMapa(keyInput);
         
         
     }
+    
+    
+    
+    
+    
     
     
 }

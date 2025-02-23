@@ -7,17 +7,33 @@ package Entities;
 import KeyInputs.KeyInput;
 import Levels.Map;
 import Renderer.Renderer;
-import Utilities.ConsoleColors;
 import java.io.IOException;
+import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author alumnegs
  */
-public class Player extends Entity {
+public class Minotaur extends Entity implements Runnable {
 
-    protected char caracter = 'J';
-    protected String colorEntitat = "\033[0;32m";
+    protected char caracter = 'M';
+    protected String colorEntitat = "\033[0;31m";
+    
+    protected Renderer renderer;
+    protected KeyInput keyInput;
+    
+    protected Map mapa;
+
+    
+    public Minotaur(Map mapa, KeyInput keyInput, Renderer renderer) {
+
+        this.mapa = mapa;
+        this.keyInput = keyInput;
+        this.renderer = renderer;
+
+    }
 
     public char getCaracter() {
         return caracter;
@@ -35,39 +51,39 @@ public class Player extends Entity {
         this.colorEntitat = colorEntitat;
     }
 
-    public void move(KeyInput keyInput, Map mapa, char caracter, char entradaUsuari)
-            throws IOException, InterruptedException {
+    public void moveMinotaur(Map mapa, char caracter) {
 
         int[] coordenadesActuals = mapa.getCoordenades(caracter);
         int novaX = coordenadesActuals[0];
         int novaY = coordenadesActuals[1];
 
-        switch (entradaUsuari) {
+        Random movAleatori = new Random();
+        int posibleMov = movAleatori.nextInt(1, 5);
 
-            case 'w':
-            case 'W':
+        switch (posibleMov) {
+
+            case 1:
                 if (!mapa.delimitadorMapa(mapa.getMapa(), (novaX - 1), novaY)) {
                     novaX -= 1;
                     mapa.setCoordenadas(novaX, novaY, caracter);
                 }
                 break;
 
-            case 's':
-            case 'S':
+            case 2:
                 if (!mapa.delimitadorMapa(mapa.getMapa(), (novaX + 1), novaY)) {
                     novaX += 1;
                     mapa.setCoordenadas(novaX, novaY, caracter);
                 }
                 break;
-            case 'a':
-            case 'A':
+
+            case 3:
                 if (!mapa.delimitadorMapa(mapa.getMapa(), novaX, (novaY - 1))) {
                     novaY -= 1;
                     mapa.setCoordenadas(novaX, novaY, caracter);
                 }
                 break;
-            case 'd':
-            case 'D':
+
+            case 4:
                 if (!mapa.delimitadorMapa(mapa.getMapa(), novaX, (novaY + 1))) {
                     novaY += 1;
                     mapa.setCoordenadas(novaX, novaY, caracter);
@@ -78,12 +94,15 @@ public class Player extends Entity {
 
     }
 
-    public Player() {
-
-    }
-
-    public Player(char caracter, String colorEntitat) {
-        super(caracter, colorEntitat);
+    @Override
+    public void run() {
+        try {
+            renderer.renderMovimentMinotaure(keyInput);
+        } catch (IOException ex) {
+            Logger.getLogger(Minotaur.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Minotaur.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

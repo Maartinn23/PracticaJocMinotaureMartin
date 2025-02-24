@@ -26,7 +26,7 @@ public class Entity {
     protected String colorEntitat;
 
     // Getters y setters
-    public char getCharacter() {
+    public char getCaracter() {
         return caracter;
     }
 

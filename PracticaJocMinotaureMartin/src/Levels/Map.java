@@ -4,6 +4,7 @@
  */
 package Levels;
 
+import Entities.Entity;
 import Entities.Player;
 import java.util.Arrays;
 
@@ -92,14 +93,20 @@ public class Map {
         this.mapa = mapa;
     }
 
-    public void mostrarMapa(char[][] mapa, Player jugador) {
+    public void mostrarMapa(char[][] mapa) {
         for (int x = 0; x < mapa.length; x++) {
             for (int y = 0; y < mapa[x].length; y++) {
                 if (mapa[x][y] == 'J') {
-                    System.out.print(jugador.getColorEntitat() + mapa[x][y] + "\033[0m" + "  ");
+                    System.out.print("\033[0;32m"+ mapa[x][y] + "\033[0m" + "  ");
 
                 } else {
-                    System.out.print("\033[0;35m" + mapa[x][y] + "\033[0m" + "  ");
+                    if (mapa[x][y] == 'M') {
+                        System.out.print("\033[0;31m" + mapa[x][y] + "\033[0m" + "  ");
+
+                    } else {
+                        System.out.print("\033[0;35m" + mapa[x][y] + "\033[0m" + "  ");
+
+                    }
                 }
             }
             System.out.println();

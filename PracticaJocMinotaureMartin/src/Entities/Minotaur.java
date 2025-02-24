@@ -20,13 +20,12 @@ public class Minotaur extends Entity implements Runnable {
 
     protected char caracter = 'M';
     protected String colorEntitat = "\033[0;31m";
-    
+
     protected Renderer renderer;
     protected KeyInput keyInput;
-    
+
     protected Map mapa;
 
-    
     public Minotaur(Map mapa, KeyInput keyInput, Renderer renderer) {
 
         this.mapa = mapa;
@@ -96,13 +95,26 @@ public class Minotaur extends Entity implements Runnable {
 
     @Override
     public void run() {
-        try {
-            renderer.renderMovimentMinotaure(keyInput);
-        } catch (IOException ex) {
-            Logger.getLogger(Minotaur.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Minotaur.class.getName()).log(Level.SEVERE, null, ex);
+
+        boolean play = true;
+        while (play) {
+            try {
+                Thread.sleep(200);
+                renderer.renderMovimentMinotaure(keyInput);
+
+                if (keyInput.getC() == 'q' || keyInput.getC() == 'Q' || keyInput.getC() == 'p') {
+                    play = false;
+                }
+
+            } catch (IOException ex) {
+                Logger.getLogger(Minotaur.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Minotaur.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+
+       
+
     }
 
 }

@@ -14,13 +14,12 @@ public class Renderer {
     
     private Map mapa;
     private Player jugador = new Player();
-    private KeyInput keyInput;
+    public KeyInput keyInput;
     private Minotaur minotaure = new Minotaur(mapa,keyInput,this);
     
-    public Renderer(Map mapa, KeyInput keyInput){
+    public Renderer(Map mapa){
         
        this.mapa = mapa;
-       this.keyInput = keyInput;
         
     }
 
@@ -79,15 +78,13 @@ public class Renderer {
     }
     
     public char[][] renderMapa(KeyInput keyInput) throws IOException, InterruptedException{
-        
-        Terminal terminal = TerminalBuilder.builder().system(true).build();
         try {
             new ProcessBuilder("clear").inheritIO().start().waitFor();
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
         
-        mapa.mostrarMapa(mapa.getMapa(),jugador);
+        mapa.mostrarMapa(mapa.getMapa());
         
         return mapa.getMapa();
        
@@ -96,7 +93,6 @@ public class Renderer {
     
     public void renderMovimentJugador(KeyInput keyInput) throws IOException, InterruptedException{
         
-        Terminal terminal = TerminalBuilder.builder().system(true).build();
         try {
             new ProcessBuilder("clear").inheritIO().start().waitFor();
         } catch (IOException | InterruptedException e) {
@@ -111,7 +107,6 @@ public class Renderer {
 
     public void renderMovimentMinotaure(KeyInput keyInput) throws IOException,InterruptedException{
         
-        Terminal terminal = TerminalBuilder.builder().system(true).build();
         try {
             new ProcessBuilder("clear").inheritIO().start().waitFor();
         } catch (IOException | InterruptedException e) {

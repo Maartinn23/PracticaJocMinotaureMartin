@@ -1,5 +1,6 @@
 package KeyInputs;
 
+import Entities.Minotaur;
 import Levels.Map;
 import Renderer.Renderer;
 import java.io.IOException;
@@ -11,19 +12,22 @@ import java.util.logging.Logger;
 
 // TODO: arreglar logica de enviar input renderer.renderMapa para que funcione el metodo move().
 public class KeyInput implements Runnable {
-    
+
     private Map mapa;
-    
+
     private String estatJoc;
     private boolean game;
     private int input;
     private char c;
     private int seleccionador;
-    
+    private Renderer renderer;
 
-    public KeyInput(Map mapa) {
+    public KeyInput(Map mapa, Renderer renderer) {
         this.mapa = mapa;
-        
+        this.game = true;
+        this.estatJoc = "menuPrincipal";
+        this.renderer = renderer;
+
     }
 
     @Override
@@ -35,10 +39,9 @@ public class KeyInput implements Runnable {
                     .build();
             terminal.enterRawMode();
 
-            Renderer renderer = new Renderer(mapa, this);
             seleccionador = 1;
 
-           // renderer.renderMenu(this);
+            renderer.renderMenu(this);
 
             while (game) {
                 input = terminal.reader().read();
@@ -96,6 +99,11 @@ public class KeyInput implements Runnable {
                             if (seleccionador == 1) {
                                 estatJoc = "partidaIniciada";
                                 renderer.renderMapa(this);
+
+                                Minotaur minotaure = new Minotaur(mapa, this, renderer);
+                                Thread filMinotaure = new Thread(minotaure);
+
+                                filMinotaure.start();
                             } else if (seleccionador == 2) {
                                 estatJoc = "menuInstruccions";
                                 renderer.renderMenuInstruccions(this);

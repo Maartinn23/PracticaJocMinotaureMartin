@@ -15,19 +15,21 @@ public class Principal {
     public static void main(String[] args) throws IOException {
         
         Map mapa = new Map();
+        
+        Renderer renderer = new Renderer(mapa);
 
-        KeyInput keyInput = new KeyInput(mapa);
+        KeyInput keyInput = new KeyInput(mapa,renderer);
+        renderer.keyInput = keyInput;
            
         Thread filKeyInput = new Thread(keyInput);
 
         System.out.println("Carregant joc...");
 
-        filKeyInput.start();
         
-        //Minotaur minotaure = new Minotaur(mapa, keyInput);
-        //Thread filMinotaure = new Thread(minotaure);
-
-        //filMinotaure.start();
+        
+        
+    
+        filKeyInput.start();
     }
 }
 

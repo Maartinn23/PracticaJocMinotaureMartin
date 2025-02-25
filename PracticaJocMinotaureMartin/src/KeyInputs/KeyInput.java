@@ -10,26 +10,26 @@ import Utilities.ConsoleColors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-// TODO: arreglar logica de enviar input renderer.renderMapa para que funcione el metodo move().
+// TODO: arreglar logica de victoria y derrota de J
 public class KeyInput implements Runnable {
-
+    
     private Map mapa;
-
+    
     private String estatJoc;
     private boolean game;
     private int input;
     private char c;
     private int seleccionador;
     private Renderer renderer;
-
+    
     public KeyInput(Map mapa, Renderer renderer) {
         this.mapa = mapa;
         this.game = true;
         this.estatJoc = "menuPrincipal";
         this.renderer = renderer;
-
+        
     }
-
+    
     @Override
     public void run() {
         try {
@@ -38,22 +38,31 @@ public class KeyInput implements Runnable {
                     .dumb(true)
                     .build();
             terminal.enterRawMode();
-
+            
             seleccionador = 1;
-
+            
             renderer.renderMenu(this);
-
+            
             while (game) {
+                
                 input = terminal.reader().read();
                 c = (char) input;
-
+                
+                if (mapa.isMinotaureAtrapaJugador()) {
+                    estatJoc = "gameOver";
+                    
+                    System.out.println("Prueba, minotauro a ganado");
+                    
+                    game = false;
+                }
+                
                 switch (c) {
                     case 'q':
                     case 'Q':
                         estatJoc = "gameOver";
                         game = false;
                         break;
-
+                    
                     case 'w':
                     case 'W':
                         if (estatJoc.equals("menuPrincipal")) {
@@ -67,7 +76,7 @@ public class KeyInput implements Runnable {
                             renderer.renderMovimentJugador(this);
                         }
                         break;
-
+                    
                     case 's':
                     case 'S':
                         if (estatJoc.equals("menuPrincipal")) {
@@ -93,21 +102,21 @@ public class KeyInput implements Runnable {
                             renderer.renderMovimentJugador(this);
                         }
                         break;
-
+                    
                     case ' ':
                         if (estatJoc.equals("menuPrincipal")) {
                             if (seleccionador == 1) {
                                 estatJoc = "partidaIniciada";
                                 renderer.renderMapa(this);
-
+                                
                                 Minotaur minotaure = new Minotaur(mapa, this, renderer);
                                 Thread filMinotaure = new Thread(minotaure);
-
+                                
                                 filMinotaure.start();
                             } else if (seleccionador == 2) {
                                 estatJoc = "menuInstruccions";
                                 renderer.renderMenuInstruccions(this);
-
+                                
                             } else if (seleccionador == 3) {
                                 estatJoc = "salir";
                                 game = false;
@@ -119,47 +128,67 @@ public class KeyInput implements Runnable {
                             estatJoc = "menuPrincipal";
                             renderer.renderMenu(this);
                         }
-
+                        
                         break;
                 }
             }
-
+            
             terminal.writer().println(ConsoleColors.RED + "---- SORTINT DEL JOC ----" + ConsoleColors.RESET);
             terminal.writer().flush();
-
+            
         } catch (IOException ex) {
             ex.printStackTrace();
         } catch (InterruptedException ex) {
             Logger.getLogger(KeyInput.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
     public String getEstatJoc() {
         return estatJoc;
     }
-
+    
     public boolean isGame() {
         return game;
     }
-
+    
     public int getSeleccionador() {
         return seleccionador;
     }
-
+    
     public int getInput() {
         return input;
     }
-
+    
     public void setInput(int input) {
         this.input = input;
     }
-
+    
     public char getC() {
         return c;
     }
-
+    
     public void setC(char c) {
         this.c = c;
     }
-
+    
+    public void setMapa(Map mapa) {
+        this.mapa = mapa;
+    }
+    
+    public void setEstatJoc(String estatJoc) {
+        this.estatJoc = estatJoc;
+    }
+    
+    public void setGame(boolean game) {
+        this.game = game;
+    }
+    
+    public void setSeleccionador(int seleccionador) {
+        this.seleccionador = seleccionador;
+    }
+    
+    public void setRenderer(Renderer renderer) {
+        this.renderer = renderer;
+    }
+    
 }

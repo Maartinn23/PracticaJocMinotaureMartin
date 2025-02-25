@@ -96,22 +96,31 @@ public class Minotaur extends Entity implements Runnable {
     @Override
     public void run() {
 
-        boolean play = true;
-        while (play) {
+        while (!mapa.isMinotaureAtrapaJugador() && keyInput.isGame()) {
             try {
                 Thread.sleep(200);
                 renderer.renderMovimentMinotaure(keyInput);
 
-                if (keyInput.getC() == 'q' || keyInput.getC() == 'Q' || keyInput.getC() == 'p') {
-                    play = false;
+                
+                if (mapa.isMinotaureAtrapaJugador()){
+                    Thread.currentThread().interrupt();
                 }
+                
+                
+                
+                if (keyInput.getC() == 'q' || keyInput.getC() == 'Q'){
+                    return;
+                }
+               
 
             } catch (IOException ex) {
                 Logger.getLogger(Minotaur.class.getName()).log(Level.SEVERE, null, ex);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Minotaur.class.getName()).log(Level.SEVERE, null, ex);
             }
+            
         }
+        
 
        
 

@@ -13,11 +13,10 @@ import Renderer.Renderer;
  */
 public class Principal {
     public static void main(String[] args) throws IOException {
-        
+
         Map mapa = new Map();
         
         Renderer renderer = new Renderer(mapa);
-
         KeyInput keyInput = new KeyInput(mapa,renderer);
         renderer.keyInput = keyInput;
            

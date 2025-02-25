@@ -6,6 +6,7 @@ package Levels;
 
 import Entities.Entity;
 import Entities.Player;
+import Renderer.Renderer;
 import java.util.Arrays;
 
 /**
@@ -13,7 +14,10 @@ import java.util.Arrays;
  * @author alumnegs
  */
 public class Map {
-
+    
+    private boolean minotaureAtrapaJugador = false;
+    private boolean jugadorArribaSortida = false;
+    
     public Map() {
     }
 
@@ -77,11 +81,16 @@ public class Map {
                 }
             }
         }
+        
+        if (caracter == 'M' && mapa[x][y] == 'J'){
+            minotaureAtrapaJugador = true;
+        }
 
         if (xActual != -1 && yActual != -1) {
             mapa[xActual][yActual] = 'P';
             mapa[x][y] = caracter;
-        }
+            
+        } 
 
     }
 
@@ -97,15 +106,19 @@ public class Map {
         for (int x = 0; x < mapa.length; x++) {
             for (int y = 0; y < mapa[x].length; y++) {
                 if (mapa[x][y] == 'J') {
-                    System.out.print("\033[0;32m"+ mapa[x][y] + "\033[0m" + "  ");
+                    System.out.print("\033[0;32m" + mapa[x][y] + "\033[0m" + "  ");
 
                 } else {
                     if (mapa[x][y] == 'M') {
                         System.out.print("\033[0;31m" + mapa[x][y] + "\033[0m" + "  ");
 
                     } else {
-                        System.out.print("\033[0;35m" + mapa[x][y] + "\033[0m" + "  ");
+                        if (mapa[x][y] == 'E') {
+                            System.out.print("\033[0;33m" + mapa[x][y] + "\033[0m" + "  ");
 
+                        } else {
+                            System.out.print("\033[0;35m" + mapa[x][y] + "\033[0m" + "  ");
+                        }
                     }
                 }
             }
@@ -131,4 +144,21 @@ public class Map {
 
     }
 
+    public boolean isMinotaureAtrapaJugador() {
+        return minotaureAtrapaJugador;
+    }
+
+    public void setMinotaureAtrapaJugador(boolean minotaureAtrapaJugador) {
+        this.minotaureAtrapaJugador = minotaureAtrapaJugador;
+    }
+
+    public boolean isJugadorArribaSortida() {
+        return jugadorArribaSortida;
+    }
+
+    public void setJugadorArribaSortida(boolean jugadorArribaSortida) {
+        this.jugadorArribaSortida = jugadorArribaSortida;
+    }
+
+    
 }

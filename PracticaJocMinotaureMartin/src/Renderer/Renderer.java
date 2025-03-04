@@ -113,37 +113,11 @@ public class Renderer {
             e.printStackTrace();
         }
         
-        minotaure.moveMinotaur(mapa, minotaure.getCaracter());
+        minotaure.moveMinotaur(mapa, minotaure.getCaracter(), jugador.getCaracter());
         
         renderMapa(keyInput);
    
     }
     
-    public void renderLose(KeyInput keyInput) throws IOException{
-        
-        Terminal terminal = TerminalBuilder.builder().system(true).build();
-        
-        try {
-            new ProcessBuilder("clear").inheritIO().start().waitFor();
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-        }
-        
-        
-        terminal.writer().write("Has perdut!!");
-        terminal.writer().write("Torna a intentar-ho...");
-        
-        keyInput.setEstatJoc("gameOver");
-        
-        
-        
-        
-    }
-    
-    
-    
-    
-    
-    
-    
+
 }

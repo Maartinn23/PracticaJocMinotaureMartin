@@ -14,10 +14,10 @@ import java.util.Arrays;
  * @author alumnegs
  */
 public class Map {
-    
+
     private boolean minotaureAtrapaJugador = false;
     private boolean jugadorArribaSortida = false;
-    
+
     public Map() {
     }
 
@@ -72,6 +72,16 @@ public class Map {
         int xActual = -1;
         int yActual = -1;
 
+        int[] coordenadesMeta = this.getCoordenades('E');
+
+        int xMeta = -1;
+        int yMeta = -1;
+
+        if (coordenadesMeta != null) {
+            xMeta = coordenadesMeta[0];
+            yMeta = coordenadesMeta[1];
+        }
+
         for (int ii = 0; ii < mapa.length; ii++) {
             for (int jj = 0; jj < mapa[ii].length; jj++) {
                 if (mapa[ii][jj] == caracter) {
@@ -81,16 +91,24 @@ public class Map {
                 }
             }
         }
-        
-        if (caracter == 'M' && mapa[x][y] == 'J'){
+
+        if (caracter == 'M' && mapa[x][y] == 'J') {
             minotaureAtrapaJugador = true;
+
         }
 
         if (xActual != -1 && yActual != -1) {
-            mapa[xActual][yActual] = 'P';
-            mapa[x][y] = caracter;
-            
-        } 
+            if (mapa[x][y] != 'M') {
+                mapa[xActual][yActual] = 'P';
+                mapa[x][y] = caracter;
+
+                if (x == xMeta && y == yMeta) {
+                    jugadorArribaSortida = true;
+                }
+
+            }
+
+        }
 
     }
 
@@ -160,5 +178,4 @@ public class Map {
         this.jugadorArribaSortida = jugadorArribaSortida;
     }
 
-    
 }

@@ -50,79 +50,69 @@ public class Minotaur extends Entity implements Runnable {
         this.colorEntitat = colorEntitat;
     }
 
-    public void moveMinotaur(Map mapa, char caracter) {
+    public void moveMinotaur(Map mapa, char caracter, char caracter2) throws InterruptedException {
 
         int[] coordenadesActuals = mapa.getCoordenades(caracter);
         int novaX = coordenadesActuals[0];
         int novaY = coordenadesActuals[1];
 
-        Random movAleatori = new Random();
-        int posibleMov = movAleatori.nextInt(1, 5);
+        int[] coordenadesActualsJugador = mapa.getCoordenades(caracter2);
+        int actualX = coordenadesActualsJugador[0];
+        int actualY = coordenadesActualsJugador[1];
 
-        switch (posibleMov) {
+        if (novaX != actualX) {
+            if (novaX < actualX) {
+                novaX++;
+            } else {
+                novaX--;
+            }
+        } 
 
-            case 1:
-                if (!mapa.delimitadorMapa(mapa.getMapa(), (novaX - 1), novaY)) {
-                    novaX -= 1;
-                    mapa.setCoordenadas(novaX, novaY, caracter);
-                }
-                break;
-
-            case 2:
-                if (!mapa.delimitadorMapa(mapa.getMapa(), (novaX + 1), novaY)) {
-                    novaX += 1;
-                    mapa.setCoordenadas(novaX, novaY, caracter);
-                }
-                break;
-
-            case 3:
-                if (!mapa.delimitadorMapa(mapa.getMapa(), novaX, (novaY - 1))) {
-                    novaY -= 1;
-                    mapa.setCoordenadas(novaX, novaY, caracter);
-                }
-                break;
-
-            case 4:
-                if (!mapa.delimitadorMapa(mapa.getMapa(), novaX, (novaY + 1))) {
-                    novaY += 1;
-                    mapa.setCoordenadas(novaX, novaY, caracter);
-                }
-                break;
-
+        if (novaY != actualY) {
+            if (novaY < actualY) {
+                novaY++;
+            } else {
+                novaY--;
+            }
         }
+        
+        mapa.setCoordenadas(novaX, novaY, caracter);
+        
+        
+    }
 
+    {
     }
 
     @Override
     public void run() {
 
-        while (!mapa.isMinotaureAtrapaJugador() && keyInput.isGame()) {
+        while (!mapa.isJugadorArribaSortida() | !mapa.isMinotaureAtrapaJugador() && keyInput.isGame()) {
             try {
-                Thread.sleep(200);
-                renderer.renderMovimentMinotaure(keyInput);
 
+                Thread.sleep(500);
+
+                renderer.renderMovimentMinotaure(keyInput);
                 
-                if (mapa.isMinotaureAtrapaJugador()){
+                if (mapa.isJugadorArribaSortida()) {
                     Thread.currentThread().interrupt();
                 }
                 
-                
-                
-                if (keyInput.getC() == 'q' || keyInput.getC() == 'Q'){
+                if (mapa.isMinotaureAtrapaJugador()) {
+                    Thread.currentThread().interrupt();
+                }
+
+                if (keyInput.getC() == 'q' || keyInput.getC() == 'Q') {
                     return;
                 }
-               
 
             } catch (IOException ex) {
                 Logger.getLogger(Minotaur.class.getName()).log(Level.SEVERE, null, ex);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Minotaur.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-        }
-        
 
-       
+        }
 
     }
 
